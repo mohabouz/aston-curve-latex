@@ -3,6 +3,8 @@
 A TikZ/PGFPlots chart of nuclear binding energy per nucleon against mass
 number, with a separate view of light nuclei.
 
+![Aston curve showing nuclear binding energy per nucleon versus mass number](diagramme_Aston.png)
+
 ## Build
 
 Compile from this directory using XeLaTeX:
