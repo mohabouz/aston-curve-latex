@@ -1,0 +1,149 @@
+\documentclass[border=0.5cm,10pt]{standalone}
+
+\usepackage[dvipsnames,svgnames]{xcolor}
+\colorlet{c_stable}{Indigo}
+\colorlet{c_all}{Gray}
+\usepackage{lmodern}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setmainlanguage{arabic}
+\setotherlanguage{french}
+\newfontfamily\arabicfont[Script=Arabic]{Ubuntu Arabic}
+
+\begin{document}
+\begin{tikzpicture}
+  \begin{axis}[
+      title={نوية لكل الربط لطاقة أستون منحنى},
+      xlabel={$A$ الكتلة عدد},
+      ylabel={(MeV/nucléon) نوية لكل الربط طاقة $\frac{E_\ell}{A}$},
+      width=19cm,
+      height=12cm,
+      xmin=0,
+      xmax=300,
+      ymin=0,
+      ymax=10,
+      xtick distance=20,
+      ytick distance=1,
+      minor x tick num=3,
+      minor y tick num=1,
+      grid=both,
+      legend pos=south east,
+      legend style={
+        /tikz/nodes={anchor=west},
+        font=\footnotesize,
+      },
+    ]
+    \addplot[
+      only marks,
+      mark=*,
+      mark size=0.5pt,
+      draw=red!50,
+      fill=red!50,
+      % opacity=0.45,
+      restrict y to domain=0:9,
+      unbounded coords=discard,
+    ] table[
+      col sep=comma,
+      x index=0,
+      y index=3,
+    ] {A,Z,N,Binding Energy per Nucleon [MeV].csv};
+    \addlegendentry{النوى كل}
+
+    \addplot[
+      no marks,
+      color=c_stable,
+      thick,
+      forget plot,
+    ] table[
+      col sep=comma,
+      x=A,
+      y=E_liaison,
+    ] {noyaux_stables_energie.csv};
+
+    \addplot[
+      only marks,
+      mark=*,
+      mark size=1.1pt,
+      color=c_stable,
+    ] table[
+      col sep=comma,
+      x=A,
+      y=E_liaison,
+    ] {noyaux_stables_energie.csv};
+    \addlegendentry{المستقرة النوى}
+
+    \addplot[
+      only marks,
+      mark=*,
+      mark size=2pt,
+      color=MediumBlue,
+      forget plot,
+    ] coordinates {(62,8.7945555)};
+    \node[
+      anchor=south west,
+      color=MediumBlue,
+      font=\scriptsize,
+    ] at (axis cs:62,8.7945555) {$A=62$};
+  \end{axis}
+
+  \begin{axis}[
+      at={(rel axis cs:0.52,0.07)},
+      anchor=south west,
+      title={النوى الخفيفة},
+      width=7cm,
+      height=4.5cm,
+      xmin=0,
+      xmax=30,
+      ymin=0,
+      ymax=10,
+      xtick distance=5,
+      ytick distance=1,
+      grid=both,
+      font=\scriptsize,
+      axis background/.style={fill=white},
+    ]
+    \addplot[
+      only marks,
+      mark=*,
+      mark size=0.55pt,
+      draw=c_all,
+      fill=c_all,
+      opacity=0.35,
+      restrict y to domain=0:9,
+      unbounded coords=discard,
+    ] table[
+      col sep=comma,
+      x index=0,
+      y index=3,
+    ] {A,Z,N,Binding Energy per Nucleon [MeV].csv};
+
+    \addplot[
+      no marks,
+      color=c_stable,
+      thick,
+    ] table[
+      col sep=comma,
+      x=A,
+      y=E_liaison,
+    ] {noyaux_stables_energie.csv};
+
+    \addplot[
+      only marks,
+      mark=*,
+      mark size=1.1pt,
+      color=c_stable,
+    ] table[
+      col sep=comma,
+      x=A,
+      y=E_liaison,
+    ] {noyaux_stables_energie.csv};
+
+    \node[above, color=c_stable] at (axis cs:4,7.0739156) {$^{4} He$};
+    \node[above, color=c_stable] at (axis cs:12,7.6801446) {$^{12} C$};
+    \node[above, color=c_stable] at (axis cs:16,7.9762072) {$^{16} O$};
+    \node[above, color=c_stable] at (axis cs:20,8.0322412) {$^{20} Ne$};
+  \end{axis}
+\end{tikzpicture}
+\end{document}
